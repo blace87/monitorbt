@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/layer_back"
+    android:baselineAligned="false"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="32dip"
+        android:background="@drawable/layer_action_bar"
+        android:orientation="horizontal" >
+
+        <TextView
+            style="@style/labelApp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/lb_titulo" />
+
+        <ImageView
+            android:id="@+id/bordertwo"
+            android:layout_width="1px"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="12dip"
+            android:layout_toLeftOf="@+id/it_about"
+            android:src="#ffffff"
+            android:text="" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/trasn"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+            <LinearLayout
+		        android:id="@+id/linearLayout1"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:background="@drawable/layer_action_bar"
+		        android:orientation="vertical" >
+		
+		        <org.monitorView.MonitorView
+				      android:id="@+id/ejemploSV"
+				      android:layout_width="300dp"
+		            	android:layout_height="234dp"/>  
+		    </LinearLayout>
+		
+		    <LinearLayout
+		        android:id="@+id/main_datos"
+		        android:layout_width="match_parent"
+		        android:layout_height="match_parent"
+		        android:keepScreenOn="true"
+		        android:orientation="vertical" >
+		
+		        <TextView
+		            android:id="@+id/lb_cardiaco"
+		            style="@style/text1"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:text="@string/tx_rtmCardiaco" />
+		
+		        <TextView
+		            android:id="@+id/txt_lcd"
+		            style="@style/textLcd"
+		            android:text="000" />
+		
+		        <!-- ToggleButton
+		            android:id="@+id/tbtn_runtoggle"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:text="@string/status_label"
+		            android:textOff="@string/status_off"
+		            android:textOn="@string/status_on" /-->
+		        
+		        <TextView android:id="@+id/txt_btstatus"
+		                        android:text="BT status:"
+		                        android:layout_width="fill_parent" android:layout_height="wrap_content"/>
+		    </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

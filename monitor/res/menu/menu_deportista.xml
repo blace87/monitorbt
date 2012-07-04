@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/it_conectar"
+        android:title="Conectar" 
+        android:icon="@drawable/ic_menu_laptop"/>
+    <item android:id="@+id/it_desconectar"
+        android:title="Desconectar" 
+        android:icon="@drawable/ic_menu_laptop"/>
+    <item android:id="@+id/it_config"
+        android:title="Configurar" android:icon="@drawable/ic_menu_settings"/>
+    <item android:id="@+id/it_email"
+        android:title="Enviar Email" android:icon="@drawable/email"/>
+    <item android:id="@+id/it_sms"
+        android:title="Enviar SMS" android:icon="@drawable/ic_menu_dialog"/>
+    <item android:id="@+id/it_grabar"
+        android:title="Grabar" android:icon="@drawable/ic_menu_disc"/>
+    <item android:id="@+id/it_demostracion"
+        android:title="Demo" android:icon="@drawable/heart"/>
+    <item android:id="@+id/it_about"
+        android:icon="@drawable/ic_menu_more" android:title="Acerca De" />
+    <item android:id="@+id/it_exit"
+        android:icon="@drawable/ic_menu_exit" android:title="Salir" />
+</menu>

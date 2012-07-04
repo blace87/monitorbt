@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="text1" parent="@android:style/Widget.TextView">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#818181</item>
+        <item name="android:typeface">normal</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+    </style>
+    <style name="textLcd" parent="@android:style/Widget.TextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#8a8a8a</item>
+        <item name="android:typeface">monospace</item>
+        <item name="android:textSize">80dp</item>
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:background">@drawable/layer_back</item>
+    </style>
+    <style name="title1" parent="@android:style/Widget.TextView">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">left</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:textColor">#999999</item>
+        <item name="android:typeface">normal</item>
+    </style>
+    <style name="labels" parent="@android:style/Widget.TextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:typeface">normal</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">15dp</item>
+        <item name="android:gravity">left</item>
+        <item name="android:padding">5dp</item>
+    </style>
+    
+    <style name="input" parent="@android:style/Widget.EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:focusable">true</item>
+	 	<item name="android:focusableInTouchMode">true</item>
+	 	<item name="android:clickable">true</item>
+	 	<item name="android:textColor">#232323</item>
+	 	<item name="android:gravity">left</item>
+	 	<item name="android:textColorHint">#232323</item>
+	 	<item name="android:textColorHighlight">#232323</item>
+	 	<item name="android:textSize">15dp</item>
+	 	<item name="android:background">@drawable/shapes_input</item>
+	 	<item name="android:paddingLeft">30dp</item>
+	 	<item name="android:paddingRight">10dp</item>
+    </style>
+    
+    <style name="stl_boton" parent="@android:style/Widget.Button">
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:shadowColor">#7d878e</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">-1</item>
+        <item name="android:shadowRadius">0.2</item>
+        <item name="android:textSize">16dip</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:layout_width">125dp</item>
+        <item name="android:layout_height">125dp</item>
+        <item name="android:textColor">#333333</item>
+    </style>
+    <style name="app_theme">
+        <item name="android:windowBackground">@drawable/app_background</item>
+        <item name="android:listViewStyle">@style/TransparentListView</item>
+        <item name="android:expandableListViewStyle">@style/TransparentExpandableListView</item>
+    </style>
+
+	 <style name="TransparentListView" parent="@android:style/Widget.ListView">
+	  <item name="android:cacheColorHint">@android:color/transparent</item>
+	 </style>
+	
+	 <style name="TransparentExpandableListView" parent="@android:style/Widget.ExpandableListView">
+	  <item name="android:cacheColorHint">@android:color/transparent</item>
+	 </style>
+    
+	 <style name="labelApp" parent="@android:style/Widget.TextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#d4d4d4</item>
+        <item name="android:typeface">normal</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">10dp</item>
+    </style>
+</resources>

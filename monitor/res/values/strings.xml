@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="none_paired">Error emparejamiento</string>
+	<string name="app_name">Monitor 1.0</string>
+	<string name="scanning">Scanning.....</string>
+	<string name="select_device">Seleccionar Dispositivo.....</string>
+	<string name="none_found">No encontrado.....</string>
+	<string name="lb_bt_paciente">Paciente</string>
+	<string name="lb_titulo">Monitor Cardiaco</string>
+	<string name="lb_bt_atleta">Deportista</string>
+	<string name="conectar">Conectar</string>
+	<string name="lb_listDsp">Lista de Dispositivos</string>
+	<string name="lb_otroDsp">Otros Dispositivos</string>
+	<string name="lb_scann">Scannear</string>
+	<string name="lb_edad">Edad Paciente</string>
+	<string name="lb_titulo1">Monitor Cardiaco</string>
+	<string name="lb_config">Configuración</string>
+	<string name="lb_email">Email:</string>
+	<string name="lb_celular">Telf. Médico:</string>
+	<string name="lb_nombre">Nombres:</string>
+	<string name="lb_apellido">Apellidos:</string>
+	<string name="lb_telefono">Teléfono:</string>
+	<string name="lb_direccion">Dirección:</string>
+    <string name="tx_rtmCardiaco">Ritmo Cradico</string>
+    <string name="lb_bt_cancelar">Cancelar</string>
+    <string name="lb_dt_medico">Datos de Médico Tratante</string>
+    <string name="lb_dt_paciente">Datos Paciente</string>
+    <string name="lb_bt_guardar">Guardar</string>
+    <string name="lb_bt_enviar">Enviar</string>
+    <string name="lb_sp_minutos">Minu. Grabación de Datos</string>
+    <string name="lb_tipo">Tipo Paciente</string>
+    <string name="status_label">Estado</string>
+    <string name="status_off">Correr</string>
+    <string name="status_on">Pause</string>
+    <string name="title_connected_to">Conectado a: </string>
+    <string name="title_connecting">Conectando...</string>
+    <string name="title_not_connected">No Conectado</string>
+    <string-array name="min_array">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string name="edad_paciente">Edad Paciente</string>
+    <string name="atleta">Atleta</string>
+    <string name="nombre_m_dico">Nombre Médico</string>
+    <string name="email_m_dico">Email Médico</string>
+    <string name="paciente">Paciente</string>
+</resources>
