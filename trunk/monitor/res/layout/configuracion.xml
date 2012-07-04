@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="320dp" 
+    android:layout_height="fill_parent"
+    android:background="@drawable/layer_back">
+<LinearLayout android:id="@+id/layoutmain"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:id="@+id/widget32"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/widget31"
+            android:text="@string/lb_config"
+            style="@style/title1">
+        </TextView>
+    </LinearLayout>
+	<TextView
+            android:id="@+id/title_medico"
+            android:text="@string/lb_dt_medico"
+            style="@style/title1" 
+            android:background="@drawable/separador">
+        </TextView>
+    <TableLayout
+        android:id="@+id/tableLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+    	android:padding="10dp"
+    	android:layout_margin="10dp">
+
+            <TextView
+                android:id="@+id/lb_nombre_med"
+                android:text="@string/lb_nombre"
+                style="@style/labels" />
+
+            <EditText
+                android:id="@+id/txt_nombre_medico"
+                style="@style/input"
+                android:hint="@string/nombre_m_dico"
+                android:inputType="text" >
+                <requestFocus />
+            </EditText>
+
+            <TextView
+                android:id="@+id/textView1"
+                style="@style/labels"
+                android:text="@string/lb_email"/>
+
+            <EditText
+                android:id="@+id/txt_email"
+                style="@style/input"
+                android:hint="@string/email_m_dico"
+                android:inputType="textEmailAddress" >
+            </EditText>
+
+            <TextView
+                android:id="@+id/textView2"
+                style="@style/labels"
+                android:text="@string/lb_telefono"/>
+
+            <EditText
+                android:id="@+id/txt_phone"
+                style="@style/input"
+                android:hint="Teléfono Médico"
+                android:inputType="phone" />
+            <TextView
+                android:id="@+id/txv_usuario"
+                style="@style/labels"
+                android:text="Usuario:"/>
+
+            <EditText
+                android:id="@+id/txt_usuario"
+                style="@style/input"
+                android:hint="Usuario"
+                android:inputType="text" />
+            <TextView
+                android:id="@+id/txtVpass"
+                style="@style/labels"
+                android:text="Password:"/>
+
+            <EditText
+                android:id="@+id/txt_pass"
+                style="@style/input"
+                android:hint="Password"
+                android:inputType="textPassword" />
+    </TableLayout>
+	<TextView
+            android:id="@+id/title_paciente"
+            android:text="@string/lb_dt_paciente"
+            style="@style/title1"
+            android:background="@drawable/separador">
+        </TextView>
+    <TableLayout
+        android:id="@+id/tableLayou2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+    	android:padding="10dp"
+    	android:layout_margin="10dp">
+			
+			<TextView
+                android:id="@+id/lb_nompaciente"
+                style="@style/labels"
+                android:text="@string/lb_nombre"/>
+
+            <EditText
+                android:id="@+id/txt_nombre_paciente"
+                style="@style/input"
+                android:hint="Nombre Paciente"
+                android:inputType="text" >
+            </EditText>
+
+            <TextView
+                android:id="@+id/lb_apellido_paciente"
+                style="@style/labels"
+                android:text="@string/lb_apellido"/>
+
+            <EditText
+                android:id="@+id/txt_apellido_paciente"
+                style="@style/input"
+                android:hint="Apellido Paciente"
+                android:inputType="text" />
+
+            <TextView
+                android:id="@+id/lb_telefono_paciente"
+                style="@style/labels"
+                android:text="@string/lb_telefono"/>
+
+            <EditText
+                android:id="@+id/txt_telefono_paciente"
+                style="@style/input"
+                android:hint="Teléfono Paciente"
+                android:inputType="phone" />
+
+            <TextView
+                android:id="@+id/lb_direccion_paciente"
+                style="@style/labels"
+                android:text="@string/lb_direccion"
+                android:hint="Dirección Paciente"/>
+
+            <EditText
+                android:id="@+id/txt_direccion_paciente"
+                style="@style/input"
+                android:hint="Dirección Paciente"
+                android:inputType="text" />
+        
+            <TextView
+                android:id="@+id/lb_email_paciente"
+                style="@style/labels"
+                android:text="@string/lb_email"/>
+
+            <EditText
+                android:id="@+id/txt_email_paciente"
+                style="@style/input"
+                android:hint="Email Paciente"
+                android:inputType="textEmailAddress" >
+            </EditText>
+            
+            <TextView
+                android:id="@+id/lb_edad_paciente"
+                style="@style/labels"
+                android:text="@string/lb_edad"/>
+
+            <EditText
+                android:id="@+id/txt_edad_paciente"
+                style="@style/input"
+                android:hint="@string/edad_paciente"
+                android:inputType="number" >
+            </EditText>
+    </TableLayout>
+    <TableLayout
+        android:id="@+id/table_min"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+    	android:padding="10dp"
+    	android:layout_margin="10dp">
+			
+        	<TextView
+                android:id="@+id/lb_sp_minuto"
+                style="@style/labels"
+                android:text="@string/lb_tipo"/>
+        	
+        	<RadioGroup
+                android:id="@+id/rg_tipo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <RadioButton
+                    android:id="@+id/radio0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/text1"
+                    android:text="@string/paciente" />
+
+                <RadioButton
+                    android:id="@+id/radio1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/text1"
+                    android:text="@string/atleta" />
+            </RadioGroup>
+        	
+			<TextView
+                android:id="@+id/lb_sp_minuto"
+                style="@style/labels"
+                android:text="@string/lb_sp_minutos"/>
+
+            <Spinner
+                android:id="@+id/txt_tiempo"
+                style="@style/input"
+                android:prompt="@string/lb_sp_minutos">
+            </Spinner>
+
+            
+    </TableLayout>
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="100dp" android:gravity="center_vertical|center_horizontal">
+
+        <Button
+            android:id="@+id/bt_guardar_cfg"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/lb_bt_guardar" />
+
+        <Button
+            android:id="@+id/bt_cancelar_cfg"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/lb_bt_cancelar" />
+
+    </LinearLayout>
+</LinearLayout>
+
+</ScrollView>
