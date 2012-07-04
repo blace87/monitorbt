@@ -108,7 +108,7 @@ public class SendEmail extends javax.mail.Authenticator {
 	    BodyPart messageBodyPart = new MimeBodyPart(); 
 	    DataSource source = new FileDataSource(filename); 
 	    messageBodyPart.setDataHandler(new DataHandler(source)); 
-	    messageBodyPart.setFileName(filename); 
+	    messageBodyPart.setFileName(source.getName()); 
 	 
 	    _multipart.addBodyPart(messageBodyPart); 
 	  } 
