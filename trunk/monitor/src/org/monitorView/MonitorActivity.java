@@ -6,26 +6,36 @@ import org.monitor.proceso.ProcesoDatos;
 import org.monitorView.R;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.telephony.gsm.SmsManager;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -56,6 +66,7 @@ public class MonitorActivity extends Activity implements  Button.OnClickListener
     // Intent request codes
     private static final int REQUEST_CONNECT_DEVICE = 1;
     private static final int REQUEST_ENABLE_BT = 2;
+    private static final int REQUEST_DISABLE_BT = 4;
     private static final int REQUEST_CONFIGURACION = 3;
     
     private TextView mBTStatus;
@@ -80,6 +91,9 @@ public class MonitorActivity extends Activity implements  Button.OnClickListener
     private org.monitor.config.Configuracion configuracion;
     private SharedPreferences prefs;
     
+    private ProgressDialog progressDialog = null;
+	private int progressBarStatus = 0;
+    
 	/** Se ejecuta cuando la actividad se crea. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -98,7 +112,7 @@ public class MonitorActivity extends Activity implements  Button.OnClickListener
 	    
 	    // If the adapter is null, then Bluetooth is not supported
 	    if (mBluetoothAdapter == null) {
-	    	Toast.makeText(this, "Bluetooth is not available", Toast.LENGTH_LONG).show();
+	    	Toast.makeText(this, "Bluetooth no esta habiltado.", Toast.LENGTH_LONG).show();
 	        finish();
 	        return;
 	    }
@@ -221,6 +235,7 @@ public class MonitorActivity extends Activity implements  Button.OnClickListener
         	  conected = false;
         	  item_connect.setVisible(true);
         	  item_disconnect.setVisible(false);
+        	  showDialog(REQUEST_DISABLE_BT);
             break;
           }
           break;
@@ -281,6 +296,7 @@ public class MonitorActivity extends Activity implements  Button.OnClickListener
 		                // User did not enable Bluetooth or an error occured
 	            	Toast.makeText(this, "No habilitado", Toast.LENGTH_SHORT).show();
 	            	finish();
+	            	//showDialog(REQUEST_DISABLE_BT);
 	            }
 	            break;
 	        case REQUEST_CONFIGURACION:
@@ -525,6 +541,9 @@ public class MonitorActivity extends Activity implements  Button.OnClickListener
     
     public void enviarEmail()
     {
+    	playSound();
+    	progressDialog = ProgressDialog.show(MonitorActivity.this,
+                "Email", "Enviando Email...", true);
     	prefs = getSharedPreferences("monitorConfig", Context.MODE_PRIVATE);
     	configuracion.obtenerConfiguracion(prefs);
     	String ruta= Environment.getExternalStorageDirectory().getAbsolutePath()+"/data.zip";
@@ -537,10 +556,11 @@ public class MonitorActivity extends Activity implements  Button.OnClickListener
     		sendEmail.set_to(email);
     		sendEmail.addAttachment(ruta);
 			sendEmail.send();
-			
+			progressDialog.dismiss();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			progressDialog.dismiss();
 			Toast.makeText(getBaseContext(),"Error al enviar Email.",Toast.LENGTH_SHORT).show();
 		}
     }
@@ -578,7 +598,41 @@ public class MonitorActivity extends Activity implements  Button.OnClickListener
 	public void setbReady(boolean bReady) {
 		this.bReady = bReady;
 	}
-    
-    
+	
+	@Override
+    protected Dialog onCreateDialog(int id) {
+        Dialog dialog;
+        AlertDialog.Builder builder;
+        switch(id) {
+        case REQUEST_DISABLE_BT:
+        	playSound();
+            builder = new AlertDialog.Builder(this);
+            builder.setMessage("Dispositvo Bluetooth, inhabilitado!!")
+            .setCancelable(false)
+            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                   ///Aqui el proceso
+                }
+            });
+            dialog = builder.create();
+            break;
+        default:
+            dialog = null;
+        }
+        return dialog;
+
+    }
+	
+	@Override
+    public void onBackPressed() {
+
+    }
+	
+    private void playSound()
+    {
+    	Uri ringtoneUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+    	Ringtone ringtone = RingtoneManager.getRingtone(this, ringtoneUri);
+    	ringtone.play();
+    }
     
 }
