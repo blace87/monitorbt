@@ -15,11 +15,15 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;   
 import javax.mail.internet.MimeMultipart;
+
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.os.Handler;
    
 import java.util.Date;
 import java.util.Properties;
 
-public class SendEmail extends javax.mail.Authenticator {
+public class SendEmail extends javax.mail.Authenticator{
 
 	private String _user; 
 	private String _pass; 
@@ -33,8 +37,11 @@ public class SendEmail extends javax.mail.Authenticator {
 	private boolean _auth; 
 	private boolean _debuggable; 
 	private Multipart _multipart; 
-	 
-	 
+	private Handler handler;
+	public static final int STATE_NONE = 10;
+	public static final int STATE_SEND = 11;
+	
+	
 	public SendEmail() { 
 	    _host = "smtp.gmail.com"; // default smtp server 
 	    _port = "465"; // default smtp port 
@@ -61,11 +68,13 @@ public class SendEmail extends javax.mail.Authenticator {
 	    CommandMap.setDefaultCommandMap(mc); 
 	  } 
 	 
-	  public SendEmail(String user, String pass) { 
+	  public SendEmail(String user, String pass, Handler handler) { 
 	    this(); 
 	 
 	    _user = user; 
 	    _pass = pass; 
+	    this.handler = handler;
+	    
 	  } 
 	 
 	  public boolean send() throws Exception { 
@@ -97,10 +106,11 @@ public class SendEmail extends javax.mail.Authenticator {
 	 
 	      // send email 
 	      Transport.send(msg); 
-	 
+	      handler.sendEmptyMessage(STATE_SEND);
 	      return true; 
 	    } else { 
-	      return false; 
+	    	handler.sendEmptyMessage(STATE_NONE);
+	    	return false; 
 	    } 
 	  } 
 	 
@@ -169,8 +179,7 @@ public class SendEmail extends javax.mail.Authenticator {
 
 	public void set_body(String _body) {
 		this._body = _body;
-	}   
-	  
+	}
 	  
 	 
 }
