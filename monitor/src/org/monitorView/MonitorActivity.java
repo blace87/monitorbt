@@ -28,14 +28,11 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.telephony.gsm.SmsManager;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -257,6 +254,14 @@ public class MonitorActivity extends Activity implements  Button.OnClickListener
           Toast.makeText(getApplicationContext(), "",
                         Toast.LENGTH_SHORT).show();
           break;
+        case SendEmail.STATE_NONE:
+            progressDialog.dismiss();
+            Toast.makeText(getApplicationContext(), "Error al enviar Email.",
+                    Toast.LENGTH_SHORT).show();
+            break;
+        case SendEmail.STATE_SEND:
+            progressDialog.dismiss();
+            break;
         case UPDATE_LCD:
            	  	lcd.setText(msg.obj.toString());
            	  	utils.setLargest(0);
@@ -541,13 +546,12 @@ public class MonitorActivity extends Activity implements  Button.OnClickListener
     
     public void enviarEmail()
     {
-    	playSound();
     	progressDialog = ProgressDialog.show(MonitorActivity.this,
-                "Email", "Enviando Email...", true);
+                "Email", "Enviando Email...");
     	prefs = getSharedPreferences("monitorConfig", Context.MODE_PRIVATE);
     	configuracion.obtenerConfiguracion(prefs);
     	String ruta= Environment.getExternalStorageDirectory().getAbsolutePath()+"/data.zip";
-    	SendEmail sendEmail = new SendEmail(configuracion.getUsuario(), configuracion.getPassword());
+    	final SendEmail sendEmail = new SendEmail(configuracion.getUsuario(), configuracion.getPassword(), mHandler);
     	String [] email = {configuracion.getEmail_medico()};
     	try {
     		sendEmail.set_body("\n\n Nombres: "+configuracion.getNombre_paciente()+" "+configuracion.getApellido_paciente()+"\n Telèfono: "+configuracion.getTelefono_paciente()+"\n Direcciòn: "+configuracion.getDireccion_paciente());
@@ -555,12 +559,22 @@ public class MonitorActivity extends Activity implements  Button.OnClickListener
     		sendEmail.set_subject("Datos");
     		sendEmail.set_to(email);
     		sendEmail.addAttachment(ruta);
-			sendEmail.send();
-			progressDialog.dismiss();
+    		new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+						sendEmail.send();
+					} catch (Exception e) {
+						mHandler.sendEmptyMessage(SendEmail.STATE_NONE);
+						e.printStackTrace();
+					}
+                }
+            }).start();
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 			progressDialog.dismiss();
+			e.printStackTrace();
 			Toast.makeText(getBaseContext(),"Error al enviar Email.",Toast.LENGTH_SHORT).show();
 		}
     }
