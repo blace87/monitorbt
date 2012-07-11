@@ -66,7 +66,7 @@ public class ProcesoDatos {
 	            data = new StringBuffer();
 	            Compress compress = new Compress();
 	            compress.zip();
-	            dir.delete();
+	            txt.deleteOnExit();
 	        }
 	        catch (Exception e) 
 	        {      
