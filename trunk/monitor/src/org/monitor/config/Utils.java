@@ -1,9 +1,8 @@
 package org.monitor.config;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import org.monitor.proceso.ProcesoDatos;
+
+import android.os.Handler;
 
 public class Utils
 {
@@ -17,6 +16,7 @@ public class Utils
     public static float incremento_tiempo = 0.15f;
     private int dataIndex=0;
     private float tiempo = 0f;
+    private float tiempoDato = 0f;
     private int secondlargest = 0;
     private int largest = 0;
     private double time1 = 0;
@@ -26,8 +26,14 @@ public class Utils
     private boolean txt_latido= false;
     private int latido = 0;
   	boolean primerDato =  true;
-  	
-  	
+  	private boolean almacenar = false;
+	private int totalDatos = 1;
+	private int cont = 0;
+	private StringBuffer datosIngresados;
+	private ProcesoDatos procesoDatos;
+	private Handler handler;
+	public static final int FINISH = 12;
+	
   	private static int[] data_almacenamiento = new int[MAX_SAMPLES];
 	
     public Utils()
@@ -37,6 +43,9 @@ public class Utils
     
     public void iniData()
     {
+    	datosIngresados = new StringBuffer();
+    	procesoDatos = new ProcesoDatos();
+    	
     	ch2_pos=0f;
     	for(int x=0; x<MAX_SAMPLES; x++){
     		ch1_data[x] = ch1_pos;
@@ -80,8 +89,8 @@ public class Utils
 	      			periodo = periodo/300;
 	      			frecuencia = 1/periodo;
 	      			frecuencia = frecuencia*60;
-	      			System.out.println("P ="+periodo);
-	      			System.out.println("F ="+frecuencia);
+	      			//System.out.println("P ="+periodo);
+	      			//System.out.println("F ="+frecuencia);
 	      		}
 	      		else
 	      		{
@@ -91,12 +100,17 @@ public class Utils
 	      			periodo = periodo/300;
 	      			frecuencia = 1/periodo;
 	      			frecuencia = frecuencia*60;
-	      			System.out.println("P ="+periodo);
-	      			System.out.println("F ="+frecuencia);
+	      			//System.out.println("P ="+periodo);
+	      			
 	      		}
 	      		Double FxM = frecuencia;
-	      		latido = FxM.intValue();
+	      		if(FxM.intValue() <= 129 && FxM.intValue() >= 41)
+				{
+	      			latido = FxM.intValue();
+				}
+	      		
 	      		//latido = (largest+secondlargest)/2;
+	      		System.out.println("Latido ="+latido);
 	    		dataIndex = 0;
 	    		tiempo = 0f;
 	    		largest = 0;
@@ -109,12 +123,17 @@ public class Utils
 	    	else if( dataIndex<(MAX_SAMPLES) )
 	    	{
 	    		txt_latido = false;
-	    		ch1_data[dataIndex] = Utils.HEIGHT-decimal+1;
-	    		data_almacenamiento[dataIndex] = decimal;
-	    		ch2_data[dataIndex] = tiempo;
 	    		obtenerPicos(decimal, tiempo, dataIndex);
 	    		tiempo= tiempo+0.15f;
 	    		dataIndex++;
+	    		
+	    		if(!run_data)
+	    		{
+		    		ch1_data[dataIndex] = Utils.HEIGHT-decimal+1;
+		    		ch2_data[dataIndex] = tiempo;
+	    		}
+	    		else
+	    			updateDatos(decimal);
 	    		
 	    		return false;// odd data
 	    	}
@@ -148,7 +167,27 @@ public class Utils
 		}
         
 	}
-    
+	
+	public void updateDatos(int dato)
+    {
+    	if(almacenar && cont<totalDatos)
+		{
+    		String out = ""+new Float(tiempoDato).intValue()+","+dato+","+latido+"\n";
+    		datosIngresados.append(out);
+    		tiempoDato+=1;
+    		cont++;
+		}
+		else if(almacenar && cont>=totalDatos)
+		{
+			procesoDatos.almacenarDatos(datosIngresados);
+			almacenar = false;
+			totalDatos = 0;
+			tiempoDato=0;
+			cont = 0;
+			handler.sendEmptyMessage(FINISH);
+		}
+    }
+	
     public static int[] getCh1_data() {
 		return ch1_data;
 	}
@@ -205,5 +244,45 @@ public class Utils
 	public void setLatido(int latido) {
 		this.latido = latido;
 	}
+	
+	public boolean isAlmacenar() {
+		return almacenar;
+	}
+
+	public void setAlmacenar(boolean almacenar) {
+		this.almacenar = almacenar;
+	}
+	
+	public int getTotalDatos() {
+		return totalDatos;
+	}
+
+	public void setTotalDatos(int totalDatos) {
+		this.totalDatos = totalDatos*60*1000;
+	}
+
+	public int getCont() {
+		return cont;
+	}
+
+	public void setCont(int cont) {
+		this.cont = cont;
+	}
+	public Handler getHandler() {
+		return handler;
+	}
+
+	public void setHandler(Handler handler) {
+		this.handler = handler;
+	}
+
+	public float getTiempoDato() {
+		return tiempoDato;
+	}
+
+	public void setTiempoDato(float tiempoDato) {
+		this.tiempoDato = tiempoDato;
+	}
+	
 
 }

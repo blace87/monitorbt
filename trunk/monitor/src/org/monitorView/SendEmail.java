@@ -5,8 +5,7 @@ import javax.activation.DataHandler;
 import javax.activation.DataSource;   
 import javax.activation.FileDataSource;
 import javax.activation.MailcapCommandMap;
-import javax.mail.BodyPart;
-import javax.mail.Message;   
+import javax.mail.BodyPart;   
 import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;   
 import javax.mail.Session;   
@@ -15,9 +14,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;   
 import javax.mail.internet.MimeMultipart;
-
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.Handler;
    
 import java.util.Date;
