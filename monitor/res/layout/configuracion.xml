@@ -69,26 +69,6 @@
                 style="@style/input"
                 android:hint="Teléfono Médico"
                 android:inputType="phone" />
-            <TextView
-                android:id="@+id/txv_usuario"
-                style="@style/labels"
-                android:text="Usuario:"/>
-
-            <EditText
-                android:id="@+id/txt_usuario"
-                style="@style/input"
-                android:hint="Usuario"
-                android:inputType="text" />
-            <TextView
-                android:id="@+id/txtVpass"
-                style="@style/labels"
-                android:text="Password:"/>
-
-            <EditText
-                android:id="@+id/txt_pass"
-                style="@style/input"
-                android:hint="Password"
-                android:inputType="textPassword" />
     </TableLayout>
 	<TextView
             android:id="@+id/title_paciente"
@@ -173,6 +153,47 @@
                 android:inputType="number" >
             </EditText>
     </TableLayout>
+    
+    <TextView
+            android:id="@+id/title_conf"
+            android:text="Datos de Correo"
+            style="@style/title1"
+            android:background="@drawable/separador">
+        </TextView>
+    <TableLayout
+        android:id="@+id/tableLayou3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+    	android:padding="10dp"
+    	android:layout_margin="10dp">
+			
+        <TextView
+                android:id="@+id/txv_usuario"
+                style="@style/labels"
+                android:text="Usuario:"/>
+
+     	<EditText
+        	android:id="@+id/txt_usuario"
+            	style="@style/input"
+                android:hint="Usuario"
+                android:inputType="text" />
+            <TextView
+                android:id="@+id/txtVpass"
+                style="@style/labels"
+                android:text="Password:"/>
+
+            <EditText
+                android:id="@+id/txt_pass"
+                style="@style/input"
+                android:hint="Password"
+                android:inputType="textPassword" />
+    </TableLayout>
+    <TextView
+            android:id="@+id/title_email"
+            android:text="Configuraciòn Aplicaciòn"
+            style="@style/title1"
+            android:background="@drawable/separador">
+        </TextView>
     <TableLayout
         android:id="@+id/table_min"
         android:layout_width="fill_parent"
@@ -181,7 +202,7 @@
     	android:layout_margin="10dp">
 			
         	<TextView
-                android:id="@+id/lb_sp_minuto"
+                android:id="@+id/lb_tx_tipo"
                 style="@style/labels"
                 android:text="@string/lb_tipo"/>
         	
@@ -218,8 +239,9 @@
 
             
     </TableLayout>
+    
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="100dp" android:gravity="center_vertical|center_horizontal">
 

@@ -220,9 +220,11 @@ public class MonitorActivity extends Activity implements  Button.OnClickListener
         case MESSAGE_STATE_CHANGE:
           switch (msg.arg1){
           case BluetoothRfcommClient.STATE_CONNECTED:
-        	  mBTStatus.setText(R.string.title_connected_to);
-        	  mBTStatus.append("\n" + mConnectedDeviceName);
-        	  conected = true;
+        	  	mBTStatus.setText(R.string.title_connected_to);
+        	  	mBTStatus.append("\n" + mConnectedDeviceName);
+        	  	conected = true;
+        	  	item_connect.setVisible(false);
+          		item_disconnect.setVisible(true);
             break;
           case BluetoothRfcommClient.STATE_CONNECTING:
         	  mBTStatus.setText(R.string.title_connecting);
@@ -230,6 +232,7 @@ public class MonitorActivity extends Activity implements  Button.OnClickListener
           case BluetoothRfcommClient.STATE_NONE:
         	  mBTStatus.setText(R.string.title_not_connected);
         	  conected = false;
+        	  bReady = false;
         	  item_connect.setVisible(true);
         	  item_disconnect.setVisible(false);
         	  showDialog(REQUEST_DISABLE_BT);
@@ -251,8 +254,8 @@ public class MonitorActivity extends Activity implements  Button.OnClickListener
                         + mConnectedDeviceName, Toast.LENGTH_SHORT).show();
           break;
         case MESSAGE_TOAST:
-          Toast.makeText(getApplicationContext(), "",
-                        Toast.LENGTH_SHORT).show();
+          //Toast.makeText(getApplicationContext(), "",
+          //              Toast.LENGTH_SHORT).show();
           break;
         case SendEmail.STATE_NONE:
             progressDialog.dismiss();
@@ -261,6 +264,10 @@ public class MonitorActivity extends Activity implements  Button.OnClickListener
             break;
         case SendEmail.STATE_SEND:
             progressDialog.dismiss();
+            break;
+        case Utils.FINISH:
+        	bReady = false;
+        	progressDialog.dismiss();
             break;
         case UPDATE_LCD:
            	  	lcd.setText(msg.obj.toString());
@@ -336,13 +343,13 @@ public class MonitorActivity extends Activity implements  Button.OnClickListener
             	launchActividadConfiguracion();
                 break;
             case R.id.it_conectar:
-            	item.setVisible(false);
-            	item_disconnect.setVisible(true);
             	BTConnect();
                 break;
             case R.id.it_desconectar:
             	item.setVisible(false);
             	BTDisconnect();
+            	conected = false;
+            	bReady= false;
             	item_connect.setVisible(true);
                 break;
             case R.id.it_email:
@@ -378,19 +385,16 @@ public class MonitorActivity extends Activity implements  Button.OnClickListener
                 break;
             case R.id.it_grabar: 
             	if(!bReady)
-	    		{
-	    			bReady = true;
-	    			this.monitorView.setAlmacenar(true);
-	    			this.monitorView.setTotalDatos(configuracion.getTiempo_grabacion());
-	    			this.monitorView.setTiempo(0);
-	    			this.monitorView.setCont(0);
-	    		}else{
-	    			bReady = false;
-	    			this.monitorView.setAlmacenar(false);
-	    			this.monitorView.setTotalDatos(0);
-	    			this.monitorView.setTiempo(0);
-	    			this.monitorView.setCont(0);
-	    	    }
+            	{
+	            	bReady = true;
+	            	this.utils.setAlmacenar(true);
+	            	this.utils.setTotalDatos(configuracion.getTiempo_grabacion());
+	            	this.utils.setCont(0);
+	            	this.utils.setTiempoDato(0);
+	            	this.utils.setHandler(mHandler);
+	            	progressDialog = ProgressDialog.show(MonitorActivity.this,
+	        	                "Datos", "Almacenando Datos...");
+            	}
                 break;
         }
         return true;
@@ -399,7 +403,7 @@ public class MonitorActivity extends Activity implements  Button.OnClickListener
     
 	
     public void init()
-	 {
+	{
     	procesoDatos = new ProcesoDatos();
     	configuracion = new org.monitor.config.Configuracion();
     	prefs = getSharedPreferences("monitorConfig", Context.MODE_PRIVATE);
@@ -408,7 +412,7 @@ public class MonitorActivity extends Activity implements  Button.OnClickListener
 	    lcd.setTypeface(this.lcdFont);
 	    lcd.setText("000");
 	    ((TextView) findViewById(R.id.lb_cardiaco)).setTypeface(this.lcdFont);
-	  }
+	}
     
     private void demostracion()
 	{
@@ -440,16 +444,14 @@ public class MonitorActivity extends Activity implements  Button.OnClickListener
 	 */
 	public void datos(int dato)
 	{
-		 if(utils.validarDatos(dato, bReady))
-		 {
-			 if(utils.getLatido() <= 129 && utils.getLatido() >= 41)
-			 {
-				 lcd.setText(""+utils.getLatido());
-				 this.monitorView.setLatido(utils.getLatido());
-			 }
-			 utils.setLargest(0);
-			 utils.setSecondlargest(0);
-		 }
+		
+		if(utils.validarDatos(dato, bReady))
+		{
+			lcd.setText(""+utils.getLatido());
+			this.monitorView.setLatido(utils.getLatido());
+			utils.setLargest(0);
+			utils.setSecondlargest(0);
+		}
 	}
 	
 	/**
@@ -622,6 +624,18 @@ public class MonitorActivity extends Activity implements  Button.OnClickListener
         	playSound();
             builder = new AlertDialog.Builder(this);
             builder.setMessage("Dispositvo Bluetooth, inhabilitado!!")
+            .setCancelable(false)
+            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                   ///Aqui el proceso
+                }
+            });
+            dialog = builder.create();
+            break;
+        case Utils.FINISH:
+        	playSound();
+            builder = new AlertDialog.Builder(this);
+            builder.setMessage("Finalizo grabaciòn de datos.")
             .setCancelable(false)
             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {

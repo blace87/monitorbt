@@ -1,7 +1,6 @@
 package org.monitorView;
 
 import org.monitor.config.Utils;
-import org.monitor.proceso.ProcesoDatos;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -25,10 +24,6 @@ public class MonitorView extends SurfaceView implements Callback {
 	private Paint outline_paint = new Paint();
 	private MonitorThread thread;
 	private Context mContext;
-	private boolean almacenar = false;
-	private int totalDatos = 1;
-	private int tiempo = 0;
-	private int cont = 0;
 	private int latido = 0;
 	
 	//**********************/
@@ -110,16 +105,12 @@ public class MonitorView extends SurfaceView implements Callback {
 		
         private SurfaceHolder mSurfaceHolder;   
 		private boolean mRun = true;
-		private ProcesoDatos procesoDatos;
-		private StringBuffer datosIngresados;
 
 		public MonitorThread(SurfaceHolder surfaceHolder, Context context, Handler handler) {
 
             mSurfaceHolder = surfaceHolder;
             mContext = context;            
             Resources res = context.getResources();
-            procesoDatos = new ProcesoDatos();
-            datosIngresados = new StringBuffer();
 		}
 		
 		@Override
@@ -163,27 +154,8 @@ public class MonitorView extends SurfaceView implements Callback {
     		//Grafica la señal
     		for(int x=0; x<(Utils.MAX_SAMPLES-1); x++){                 
     			canvas.drawLine(utils.getCh2_data()[x], utils.getCh1_data()[x], utils.getCh2_data()[x+1], utils.getCh1_data()[x+1], ch1_color);
-    			updateDatos(utils.getData_almacenamiento()[x]);
             }
     	}
-        
-        public void updateDatos(int dato)
-        {
-        	if(almacenar && cont<totalDatos)
-    		{
-        		String out = ""+tiempo+","+dato+","+latido+"\n";
-        		datosIngresados.append(out);
-        		tiempo+=1;
-        		cont++;
-    		}
-    		else if(almacenar && cont>=totalDatos)
-    		{
-    			procesoDatos.almacenarDatos(datosIngresados);
-    			almacenar = false;
-    			totalDatos = 0;
-    			cont = 0;
-    		}
-        }
 
 		public boolean ismRun() {
 			return mRun;
@@ -202,38 +174,6 @@ public class MonitorView extends SurfaceView implements Callback {
 	public void setUtils(Utils utils) {
 		this.utils = utils;
 	}
-	
-	public boolean isAlmacenar() {
-		return almacenar;
-	}
-
-	public void setAlmacenar(boolean almacenar) {
-		this.almacenar = almacenar;
-	}
-	
-	public int getTotalDatos() {
-		return totalDatos;
-	}
-
-	public void setTotalDatos(int totalDatos) {
-		this.totalDatos = totalDatos*60*1000;
-	}
-
-	public int getTiempo() {
-		return tiempo;
-	}
-
-	public void setTiempo(int tiempo) {
-		this.tiempo = tiempo;
-	}
-
-	public int getCont() {
-		return cont;
-	}
-
-	public void setCont(int cont) {
-		this.cont = cont;
-	}
 
 	public int getLatido() {
 		return latido;
@@ -246,5 +186,6 @@ public class MonitorView extends SurfaceView implements Callback {
 	public void setThread(MonitorThread thread) {
 		this.thread = thread;
 	}
+	
 	
 }
